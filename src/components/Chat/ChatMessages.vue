@@ -1,30 +1,25 @@
 <script setup>
-  import {onMounted, reactive} from 'vue';
-
-  const messages = reactive([]);
-
-  onMounted(() => {
-    fetch('https://les003-mongodn.onrender.com/api/v1/messages')
-      .then(response => response.json())
-      .then(data => {
-        messages.push (...data.data.messages);
-      });
-  });
-
-  function handleNewMessage(message){
-    messages.push(message);
-  }
+  const props = defineProps({
+    messages: Array
+  })
 </script>
 
 <template>
   <h2>Comments</h2>
-  <u>
-    <li v-for="message in messages">
+  <ul>
+    <li v-for="(message, index) in messages" :key="index">
       <strong>{{ message.user }}</strong>: {{ message.text }}
     </li>
-  </u>
+  </ul>
 </template>
 
 <style scoped>
+ul {
+  list-style-type: none;
+  padding: 0;
+}
 
+li {
+  margin: 0.5rem 0;
+}
 </style>
